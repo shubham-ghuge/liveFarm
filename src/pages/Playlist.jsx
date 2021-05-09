@@ -17,13 +17,10 @@ export const Playlist = () => {
     <section className="playlist nav-adjust">
       <h3 className="heading d-flex jc-space-between mb-2">
         {playlistName.name}
-        <button className="btn-danger btn-addon">
-          <FiTrash2 />
-        </button>
       </h3>
       {videosInPlaylist.length !== 0 ? (
-        videosInPlaylist.map((video, idx) => (
-          <VideoCard videoDetails={video} key={idx} />
+        videosInPlaylist.map((video) => (
+          <VideoCard videoDetails={video} key={video.id} />
         ))
       ) : (
         <div className="d-block text-center">

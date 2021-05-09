@@ -18,9 +18,7 @@ export const PlaylistListing = () => {
             <figcaption className="playlist-title">
               <p className="playlist-heading">
                 {item.name}
-                <span>
-                  <i className="icon bx bx-dots-vertical-rounded"></i>
-                </span>
+              
               </p>
               <p>{item.videos.length} videos</p>
             </figcaption>
