@@ -45,6 +45,7 @@ export const initialState = {
 };
 
 export function DataReducer(state, action) {
+
   function addToPlaylist(videoId, playlistId) {
     return {
       ...state,
@@ -55,6 +56,7 @@ export function DataReducer(state, action) {
       })
     };
   }
+
   function removeFromPlaylist(videoId, playlistId) {
     return {
       ...state,
@@ -68,6 +70,7 @@ export function DataReducer(state, action) {
       })
     };
   }
+  
   switch (action.type) {
     case "ADD_NEW_PLAYLIST":
       return {
@@ -81,6 +84,7 @@ export function DataReducer(state, action) {
           }
         ]
       };
+
     case "REMOVE_PLAYLIST":
       return {
         ...state,
@@ -93,6 +97,9 @@ export function DataReducer(state, action) {
       return action.payload.status
         ? addToPlaylist(action.payload.videoId, action.payload.playlistId)
         : removeFromPlaylist(action.payload.videoId, action.payload.playlistId);
+    
+    case "ADD_VIDEO":
+      return state;
 
     default:
       return state;

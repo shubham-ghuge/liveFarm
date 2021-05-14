@@ -6,9 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 export const Account = () => {
   function submitVideo(e) {
     e.preventDefault();
+    
   }
   return (
-    <section className="user-account">
+    <section className="user-account nav-adjust">
       <h3>Profile</h3>
       <div className="user-info">
         <img src={channelIcon} className="channel-icon" alt="User" />
@@ -20,7 +21,7 @@ export const Account = () => {
       <h3>Submit Video</h3>
       <form onSubmit={(evt) => submitVideo(evt)}>
         <div className="input-livefarm">
-          <input type="text" required />
+          <input type="URL" required />
           <label>Enter YT Video URL</label>
         </div>
         <div className="input-livefarm">
@@ -29,7 +30,7 @@ export const Account = () => {
         </div>
         <div className="input-livefarm">
           <input type="text" required />
-          <label>Enter Video Title</label>
+          <label data-error="This field is required" >Enter Video Title</label>
         </div>
         <button
           type="submit"

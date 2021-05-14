@@ -17,12 +17,12 @@ export const Dropdown = ({ customStyle, videoData }) => {
     <>
       <div className="dropdown" style={customStyle}>
         <ul>
-          {playlistData.map((playlist) => (
+          {playlistData && playlistData.map((playlist) => (
             <li className="list" key={playlist.id}>
-              <label htmlFor={playlist.id} key={playlist.id}>
+              <label htmlFor={playlist.id}>
                 <input
                   type="checkbox"
-                  checked={isInPlaylist(playlistData, playlist.id, videoData)}
+                  checked={isInPlaylist(playlistData, playlist.id, videoData) ? true : false}
                   id={playlist.id}
                   onChange={(e) =>
                     dispatch({
@@ -47,7 +47,7 @@ export const Dropdown = ({ customStyle, videoData }) => {
               <input
                 type="text"
                 value={newPlaylist}
-                onChange={(e) => setNewPlaylist(() => e.target.value)}
+                onChange={(e) => setNewPlaylist(e.target.value)}
                 placeholder="Enter Here"
                 required
               />

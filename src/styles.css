@@ -579,7 +579,7 @@ header .active .avatar-sm-i-basic {
 .user-info {
   display: flex;
   align-items: flex-start;
-  justify-content: start;
+  justify-content: flex-start;
   column-gap: var(--p-2);
   -webkit-column-gap: var(--p-2);
   -moz-column-gap: var(--p-2);
