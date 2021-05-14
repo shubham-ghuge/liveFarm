@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useDataContext } from "../contexts/DataContextProvider";
 import { VideoCard } from "../components";
-import { FiTrash2 } from "react-icons/fi";
 export const Playlist = () => {
   const { playlistId } = useParams();
   const { videoData, playlistData } = useDataContext();
@@ -20,7 +19,12 @@ export const Playlist = () => {
       </h3>
       {videosInPlaylist.length !== 0 ? (
         videosInPlaylist.map((video) => (
-          <VideoCard videoDetails={video} key={video.id} />
+          <VideoCard
+            videoDetails={video}
+            key={video.id}
+            playlistId={playlistId}
+            showDelete={true}
+          />
         ))
       ) : (
         <div className="d-block text-center">

@@ -97,9 +97,6 @@ export function DataReducer(state, action) {
       return action.payload.status
         ? addToPlaylist(action.payload.videoId, action.payload.playlistId)
         : removeFromPlaylist(action.payload.videoId, action.payload.playlistId);
-    
-    case "ADD_VIDEO":
-      return state;
 
     default:
       return state;

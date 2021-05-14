@@ -1,20 +1,39 @@
 import { useNavigate } from "react-router-dom";
-
-export const VideoCard = ({ videoDetails }) => {
+import { AiOutlineDelete } from "react-icons/ai";
+import { useDataContext } from "../contexts/DataContextProvider";
+export const VideoCard = ({ videoDetails, showDelete, playlistId }) => {
   let navigation = useNavigate();
+  const { dispatch } = useDataContext();
+  function navigateToVideo() {
+    return navigation(`/video/${videoDetails.id}`);
+  }
   return (
-    <figure
-      className="video-card"
-      onClick={() => navigation(`/video/${videoDetails.id}`)}
-      key={videoDetails.id}
-    >
+    <figure className="video-card" key={videoDetails.id}>
       <img
         src={`https://img-assets.netlify.app/video-thumbnails/${videoDetails.thumbnail}`}
         alt="thumbnail"
         className="video-card-thumbnail"
         loading="lazy"
+        onClick={navigateToVideo}
       />
-      <figcaption className="video-card-details">
+      {showDelete && (
+        <button
+          className="btn-danger p-1 mx-1 close"
+          onClick={() =>
+            dispatch({
+              type: "TOGGLE_VIDEO_IN_PLAYLIST",
+              payload: {
+                videoId: videoDetails.id,
+                playlistId: playlistId,
+                status: false,
+              },
+            })
+          }
+        >
+          <AiOutlineDelete className="fsz-2" />
+        </button>
+      )}
+      <figcaption className="video-card-details" onClick={navigateToVideo}>
         <p className="channel-name">
           User Name <span className="date">jan 12, 2021</span>
         </p>
