@@ -1,6 +1,7 @@
-import { VideoCard } from "../components";
-import { useDataContext } from "../contexts/DataContextProvider";
-export const Home = () => {
+import { VideoCard } from "../VideoCard";
+import { useDataContext } from "../../contexts/DataContextProvider";
+
+export function Home() {
   const { videoData } = useDataContext();
   return (
     <>
@@ -28,4 +29,4 @@ export const Home = () => {
       </section>
     </>
   );
-};
+}

@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
-import logo from "../assets/main-logo.svg";
+import logo from "../../../assets/main-logo.svg";
 import { FiPlayCircle, FiUser } from "react-icons/fi";
-export const Navbar = () => {
+
+export function Navbar() {
   return (
     <>
       <header>
@@ -38,4 +39,4 @@ export const Navbar = () => {
       </header>
     </>
   );
-};
+}

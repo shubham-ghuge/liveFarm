@@ -1,14 +1,12 @@
 import "./styles.css";
 import { Routes, Route } from "react-router-dom";
-import { Navbar } from "./components";
-import {
-  Home,
-  Playlist,
-  PlaylistListing,
-  VideoPlayer,
-  Account,
-  NotFound
-} from "./pages";
+import { Navbar } from "./components/Navbar";
+import { PlaylistListing, Playlist } from "../Playlist";
+import { Home } from "../Home";
+import { Account } from "../Auth";
+import { NotFound } from "../NotFound";
+import { VideoPlayer } from "../VideoPlayer";
+
 export default function App() {
   return (
     <main>

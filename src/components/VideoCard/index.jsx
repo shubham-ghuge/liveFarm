@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useDataContext } from "../contexts/DataContextProvider";
-export const VideoCard = ({ videoDetails, showDelete, playlistId }) => {
+import { useDataContext } from "../../contexts/DataContextProvider";
+
+export function VideoCard({ videoDetails, showDelete, playlistId }){
   let navigation = useNavigate();
   const { dispatch } = useDataContext();
   function navigateToVideo() {

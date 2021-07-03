@@ -1,18 +1,20 @@
-import channelLogo from "../assets/photo1.png";
+import channelLogo from "../../assets/photo1.png";
 import { useState } from "react";
-import { Dropdown } from "../components";
 import { useParams } from "react-router-dom";
-import { useDataContext } from "../contexts/DataContextProvider";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { AiOutlineClockCircle, AiFillClockCircle } from "react-icons/ai";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
-import isInPlaylist from "../hooks/functions";
-export const VideoPlayer = () => {
+import { Dropdown } from "./components";
+import { useDataContext } from "../../contexts/DataContextProvider";
+import isInPlaylist from "../../utils";
+
+export function VideoPlayer() {
   const [toggle, setToggle] = useState(false);
   const { videoId } = useParams();
   const { videoData, playlistData, dispatch } = useDataContext();
   const video = videoData.filter((vid) => vid.id === videoId);
+
   return (
     <>
       {video.map(({ id, url, name }) => (
@@ -33,8 +35,8 @@ export const VideoPlayer = () => {
                     payload: {
                       videoId: id,
                       playlistId: "p1",
-                      status: !isInPlaylist(playlistData, "p1", id)
-                    }
+                      status: !isInPlaylist(playlistData, "p1", id),
+                    },
                   })
                 }
               >
@@ -55,8 +57,8 @@ export const VideoPlayer = () => {
                     payload: {
                       videoId: id,
                       playlistId: "p3",
-                      status: !isInPlaylist(playlistData, "p3", id)
-                    }
+                      status: !isInPlaylist(playlistData, "p3", id),
+                    },
                   })
                 }
               >
@@ -77,8 +79,8 @@ export const VideoPlayer = () => {
                     payload: {
                       videoId: id,
                       playlistId: "p2",
-                      status: !isInPlaylist(playlistData, "p2", id)
-                    }
+                      status: !isInPlaylist(playlistData, "p2", id),
+                    },
                   })
                 }
               >
@@ -133,4 +135,4 @@ export const VideoPlayer = () => {
       ))}
     </>
   );
-};
+}

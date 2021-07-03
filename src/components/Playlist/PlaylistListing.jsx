@@ -1,7 +1,8 @@
 import { FcVideoFile } from "react-icons/fc";
-import { useDataContext } from "../contexts/DataContextProvider";
+import { useDataContext } from "../../contexts/DataContextProvider";
 import { useNavigate } from "react-router-dom";
-export const PlaylistListing = () => {
+
+export function PlaylistListing() {
   const { playlistData } = useDataContext();
   let navigation = useNavigate();
   return (
@@ -16,10 +17,7 @@ export const PlaylistListing = () => {
           >
             <FcVideoFile className="icon-2x" />
             <figcaption className="playlist-title">
-              <p className="playlist-heading">
-                {item.name}
-              
-              </p>
+              <p className="playlist-heading">{item.name}</p>
               <p>{item.videos.length} videos</p>
             </figcaption>
           </figure>
@@ -27,4 +25,4 @@ export const PlaylistListing = () => {
       </div>
     </section>
   );
-};
+}

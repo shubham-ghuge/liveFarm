@@ -1,13 +1,10 @@
-import channelIcon from "../assets/photo1.png";
+import channelIcon from "../../assets/photo1.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Account = () => {
-  function submitVideo(e) {
-    e.preventDefault();
-    
-  }
+  
   return (
     <section className="user-account nav-adjust">
       <h3>Profile</h3>

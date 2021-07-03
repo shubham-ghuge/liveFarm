@@ -1,7 +1,9 @@
 import { useParams, Link } from "react-router-dom";
-import { useDataContext } from "../contexts/DataContextProvider";
-import { VideoCard } from "../components";
-export const Playlist = () => {
+import { useDataContext } from "../../contexts/DataContextProvider";
+import { VideoCard } from "../VideoCard";
+
+export function Playlist(){
+  
   const { playlistId } = useParams();
   const { videoData, playlistData } = useDataContext();
   const [{ videos: playlistVideos }] = playlistData.filter(
