@@ -9,8 +9,10 @@ export function Navbar() {
         <NavLink to="/" className="d-flex ai-center">
           <img src={logo} className="img-logo" alt="lifeFarm Logo" />
         </NavLink>
-
         <ul>
+          <li>
+            <NavLink to="/auth">test</NavLink>
+          </li>
           <li>
             <NavLink
               to="/playlist"
