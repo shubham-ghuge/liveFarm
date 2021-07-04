@@ -413,6 +413,7 @@ header .active .avatar-sm-i-basic {
 .video-player .icon-btn-base .text {
   font-size: 1rem;
   font-weight: 600;
+  margin-left: var(--p-2);
   text-transform: capitalize;
   display: none;
 }

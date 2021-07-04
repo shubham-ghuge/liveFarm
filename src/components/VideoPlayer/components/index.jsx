@@ -4,7 +4,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { useDataContext } from "../../../contexts/DataContextProvider";
 import isInPlaylist from "../../../utils";
 
-export const Dropdown = ({ customStyle, videoData }) => {
+export const Dropdown = ({ videoData }) => {
   const { playlistData, dispatch } = useDataContext();
   const [newPlaylist, setNewPlaylist] = useState("");
   
@@ -18,7 +18,7 @@ export const Dropdown = ({ customStyle, videoData }) => {
   }
 
   return (
-    <div className="dropdown" style={customStyle}>
+    <div className="dropdown">
       <ul>
         {playlistData &&
           playlistData.map((playlist) => (

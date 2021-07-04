@@ -23,19 +23,40 @@ function Register() {
       const { data } = await axios.post(
         "https://live-farm.herokuapp.com/users/register",
         {
-          userDetails: {
-            name: inputDetails.name,
-            email: inputDetails.email,
-            password: inputDetails.password,
-          },
+          name: inputDetails.name,
+          email: inputDetails.email,
+          password: inputDetails.password,
         }
       );
-      console.log(data);
+      if (data.success) {
+        ["liked videos", "saved videos", "watch later"].map(
+          async (i) => await setPlaylists(data.token, i)
+        );
+      }
       setMessage(data.message);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function setPlaylists(token, playlistName) {
+    try {
+      const response = await axios.post(
+        "https://live-farm.herokuapp.com/playlists",
+        {
+          name: playlistName,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   }
   return (

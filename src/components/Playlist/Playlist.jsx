@@ -3,17 +3,16 @@ import { useParams, Link } from "react-router-dom";
 import { useDataContext } from "../../contexts/DataContextProvider";
 import { VideoCard } from "../VideoCard";
 
-export function Playlist(){
-  
+export function Playlist() {
   const { playlistId } = useParams();
   const { videoData, playlistData } = useDataContext();
   const [{ videos: playlistVideos }] = playlistData.filter(
-    ({ id }) => id === playlistId
+    ({ _id }) => _id === playlistId
   );
   const videosInPlaylist = videoData.filter((item) =>
     playlistVideos.includes(item._id)
   );
-  const [playlistName] = playlistData.filter((i) => i.id === playlistId);
+  const [playlistName] = playlistData.filter((i) => i._id === playlistId);
 
   return (
     <section className="playlist nav-adjust">
@@ -24,7 +23,7 @@ export function Playlist(){
         videosInPlaylist.map((video) => (
           <VideoCard
             videoDetails={video}
-            key={video.id}
+            key={video._id}
             playlistId={playlistId}
             showDelete={true}
           />
@@ -39,4 +38,4 @@ export function Playlist(){
       )}
     </section>
   );
-};
+}

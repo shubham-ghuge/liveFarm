@@ -32,17 +32,17 @@ export const initialState = {
   playlistData: [
     {
       name: "Liked Videos",
-      id: "p1",
+      _id: "p1",
       videos: []
     },
     {
       name: "Saved Videos",
-      id: "p2",
+      _id: "p2",
       videos: []
     },
     {
       name: "Watch Later",
-      id: "p3",
+      _id: "p3",
       videos: []
     }
   ],
@@ -50,31 +50,6 @@ export const initialState = {
 };
 
 export function DataReducer(state, action) {
-
-  function addToPlaylist(videoId, playlistId) {
-    return {
-      ...state,
-      playlistData: state.playlistData.map((item) => {
-        return item.id === playlistId
-          ? { ...item, videos: [...item.videos, videoId] }
-          : item;
-      })
-    };
-  }
-
-  function removeFromPlaylist(videoId, playlistId) {
-    return {
-      ...state,
-      playlistData: state.playlistData.map((item) => {
-        return item.id === playlistId
-          ? {
-            ...item,
-            videos: item.videos.filter((video) => video !== videoId)
-          }
-          : item;
-      })
-    };
-  }
 
   switch (action.type) {
 
@@ -85,31 +60,9 @@ export function DataReducer(state, action) {
       const { videoData } = action.payload;
       return { ...state, videoData };
 
-    case "ADD_NEW_PLAYLIST":
-      return {
-        ...state,
-        playlistData: [
-          ...state.playlistData,
-          {
-            id: `${Date.now()}`,
-            name: action.payload.playlistName,
-            videos: [action.payload.videoId]
-          }
-        ]
-      };
-
-    case "REMOVE_PLAYLIST":
-      return {
-        ...state,
-        playlistData: state.playlistData.filter(
-          ({ id }) => id !== action.payload.playlistId
-        )
-      };
-
-    case "TOGGLE_VIDEO_IN_PLAYLIST":
-      return action.payload.status
-        ? addToPlaylist(action.payload.videoId, action.payload.playlistId)
-        : removeFromPlaylist(action.payload.videoId, action.payload.playlistId);
+    case "INITIALIZE_PLAYLIST":
+      const { playlistData } = action.payload;
+      return { ...state, playlistData }
 
     default:
       return state;

@@ -12,30 +12,49 @@ export default function DataContextProvider({ children }) {
 
   async function getVideoData() {
     try {
-      dispatch({ type: "LOADING" })
-      const { data } = await axios.get("https://live-farm.herokuapp.com/videos");
-      if (data.sucess) {
-        dispatch({ type: "INITIALIZE_VIDEOS", payload: { videoData: data.response } });
+      dispatch({ type: "LOADING" });
+      const { data } = await axios.get(
+        "https://live-farm.herokuapp.com/videos"
+      );
+      if (data.success) {
+        dispatch({
+          type: "INITIALIZE_VIDEOS",
+          payload: { videoData: data.response },
+        });
       }
     } catch (error) {
       console.log(error);
     } finally {
-      dispatch({ type: "LOADING" })
+      dispatch({ type: "LOADING" });
     }
   }
   async function getPlaylists() {
     console.log("in playlist call");
     try {
-      console.log(axios.defaults.headers.common["Authorization"]);
-      const { data } = await axios.get("https://live-farm.herokuapp.com/playlists");
-      console.log(data);
+      console.log(
+        "in data context",
+        axios.defaults.headers.common["Authorization"]
+      );
+      dispatch({ type: "LOADING" });
+      const { data } = await axios.get(
+        "https://live-farm.herokuapp.com/playlists"
+      );
+      if (data.success) {
+        dispatch({
+          type: "INITIALIZE_PLAYLIST",
+          payload: { playlistData: data.response },
+        });
+      }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch({ type: "LOADING" });
     }
   }
+  
   useEffect(() => {
     token && getPlaylists();
-  }, [])
+  }, []);
 
   useEffect(() => {
     getVideoData();
@@ -47,7 +66,7 @@ export default function DataContextProvider({ children }) {
         loading: state.loading,
         videoData: state.videoData,
         playlistData: state.playlistData,
-        dispatch
+        dispatch,
       }}
     >
       {children}

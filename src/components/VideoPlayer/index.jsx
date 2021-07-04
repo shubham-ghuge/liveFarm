@@ -28,19 +28,7 @@ export function VideoPlayer() {
           ></iframe>
           <div className="video-player-description">
             <div className="video-player-actions">
-              <button
-                className="icon-btn-base btn-addon"
-                onClick={() =>
-                  dispatch({
-                    type: "TOGGLE_VIDEO_IN_PLAYLIST",
-                    payload: {
-                      videoId: _id,
-                      playlistId: "p1",
-                      status: !isInPlaylist(playlistData, "p1", _id),
-                    },
-                  })
-                }
-              >
+              <button className="icon-btn-base btn-addon">
                 <span>
                   {isInPlaylist(playlistData, "p1", _id) ? (
                     <IoMdHeart className="icon" />
@@ -50,19 +38,7 @@ export function VideoPlayer() {
                 </span>
                 <span className="text">Like</span>
               </button>
-              <button
-                className="icon-btn-base btn-addon"
-                onClick={() =>
-                  dispatch({
-                    type: "TOGGLE_VIDEO_IN_PLAYLIST",
-                    payload: {
-                      videoId: _id,
-                      playlistId: "p3",
-                      status: !isInPlaylist(playlistData, "p3", _id),
-                    },
-                  })
-                }
-              >
+              <button className="icon-btn-base btn-addon">
                 <span>
                   {isInPlaylist(playlistData, "p3", _id) ? (
                     <AiFillClockCircle className="icon" />
@@ -72,19 +48,7 @@ export function VideoPlayer() {
                 </span>
                 <span className="text">later</span>
               </button>
-              <button
-                className="icon-btn-base btn-addon"
-                onClick={() =>
-                  dispatch({
-                    type: "TOGGLE_VIDEO_IN_PLAYLIST",
-                    payload: {
-                      videoId: _id,
-                      playlistId: "p2",
-                      status: !isInPlaylist(playlistData, "p2", _id),
-                    },
-                  })
-                }
-              >
+              <button className="icon-btn-base btn-addon">
                 <span>
                   {isInPlaylist(playlistData, "p2", _id) ? (
                     <BsBookmarkFill className="icon" />
@@ -107,12 +71,7 @@ export function VideoPlayer() {
                 <span className="text">{toggle ? "close" : "add"}</span>
               </button>
               {
-                <Dropdown
-                  videoData={_id}
-                  customStyle={
-                    toggle ? { display: "block" } : { display: "none" }
-                  }
-                />
+                toggle && <Dropdown videoData={_id} />
               }
             </div>
             <div className="video-player-user">
