@@ -1,3 +1,4 @@
+import React from "react";
 import channelIcon from "../../assets/photo1.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";

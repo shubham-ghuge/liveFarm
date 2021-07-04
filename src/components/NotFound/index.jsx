@@ -1,3 +1,4 @@
+import React from "react";
 import { BiErrorAlt } from "react-icons/bi";
 export const NotFound = () => {
   return (

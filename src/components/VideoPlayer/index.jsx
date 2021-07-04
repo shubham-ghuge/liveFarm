@@ -1,3 +1,4 @@
+import React from "react";
 import channelLogo from "../../assets/photo1.png";
 import { useState } from "react";
 import { useParams } from "react-router-dom";

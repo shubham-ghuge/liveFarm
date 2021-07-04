@@ -1,3 +1,4 @@
+import React from "react";
 import { BiLoaderCircle } from "react-icons/bi";
 import "./loader.css"
 

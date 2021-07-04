@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios";
 import { useContext, createContext, useReducer, useEffect } from "react";
 import { initialState, DataReducer } from "../reducers/DataReducer";
