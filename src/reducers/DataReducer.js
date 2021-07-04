@@ -30,26 +30,36 @@ export const initialState = {
     }
   ],
   playlistData: [
-    {
-      name: "Liked Videos",
-      _id: "p1",
-      videos: []
-    },
-    {
-      name: "Saved Videos",
-      _id: "p2",
-      videos: []
-    },
-    {
-      name: "Watch Later",
-      _id: "p3",
-      videos: []
-    }
   ],
   loading: false
 };
 
 export function DataReducer(state, action) {
+
+  function addToPlaylist(videoId, playlistId) {
+    return {
+      ...state,
+      playlistData: state.playlistData.map((item) => {
+        return item._id === playlistId
+          ? { ...item, videos: [...item.videos, videoId] }
+          : item;
+      })
+    };
+  }
+
+  function removeFromPlaylist(videoId, playlistId) {
+    return {
+      ...state,
+      playlistData: state.playlistData.map((item) => {
+        return item._id === playlistId
+          ? {
+            ...item,
+            videos: item.videos.filter((video) => video !== videoId)
+          }
+          : item;
+      })
+    };
+  }
 
   switch (action.type) {
 
@@ -63,6 +73,32 @@ export function DataReducer(state, action) {
     case "INITIALIZE_PLAYLIST":
       const { playlistData } = action.payload;
       return { ...state, playlistData }
+
+    case "ADD_NEW_PLAYLIST":
+      return {
+        ...state,
+        playlistData: [
+          ...state.playlistData,
+          {
+            _id: action.payload.id,
+            name: action.payload.playlistName,
+            videos: [action.payload.videoId]
+          }
+        ]
+      };
+
+    case "REMOVE_PLAYLIST":
+      return {
+        ...state,
+        playlistData: state.playlistData.filter(
+          ({ _id }) => _id !== action.payload.playlistId
+        )
+      };
+
+    case "TOGGLE_VIDEO_IN_PLAYLIST":
+      return action.payload.status
+        ? addToPlaylist(action.payload.videoId, action.payload.playlistId)
+        : removeFromPlaylist(action.payload.videoId, action.payload.playlistId);
 
     default:
       return state;

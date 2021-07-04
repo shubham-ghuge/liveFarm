@@ -8,7 +8,7 @@ function PrivateRoute({ path, ...props }) {
   return isUserLoggedIn ? (
     <Route path={path} {...props} />
   ) : (
-    <Navigate to="/auth" state={{ from: path }} replace />
+    <Navigate state={{ from: path }} replace to="/auth" />
   );
 }
 export { PrivateRoute };

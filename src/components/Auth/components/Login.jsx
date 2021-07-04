@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContextProvider";
 import { Alert } from "../../Alert";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -12,14 +12,18 @@ function Login() {
     password: "",
     showPass: false,
   });
+  let navigate = useNavigate();
   const [message, setMessage] = useState(null);
   async function userLogin(e) {
     e.preventDefault();
-    const message = await loginWithCredentials(
+    const data = await loginWithCredentials(
       userInput.email,
       userInput.password
     );
-    setMessage(message);
+    setMessage(data.message);
+    if (data.success) {
+      navigate("/", { replace: true });
+    }
   }
   return (
     <>

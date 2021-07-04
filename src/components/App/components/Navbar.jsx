@@ -12,9 +12,6 @@ export function Navbar() {
         </NavLink>
         <ul>
           <li>
-            <NavLink to="/auth">test</NavLink>
-          </li>
-          <li>
             <NavLink
               to="/playlist"
               className="link-reset"

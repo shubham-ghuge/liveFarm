@@ -32,7 +32,7 @@ export default function AuthContextProvider({ children }) {
         );
         axios.defaults.headers.common["Authorization"] = data.token;
       }
-      return data.message;
+      return data;
     } catch (error) {
       console.log(error);
     } finally {

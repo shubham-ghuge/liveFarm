@@ -3,17 +3,17 @@ import channelIcon from "../../assets/photo1.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuthContext } from "../../contexts/AuthContextProvider";
 
 export function Account() {
+  const { userDetails } = useAuthContext();
+  const { name } = userDetails || {};
   return (
     <section className="user-account nav-adjust">
       <h3>Profile</h3>
       <div className="user-info">
         <img src={channelIcon} className="channel-icon" alt="User" />
-        <div className="input-livefarm-disabled">
-          <input type="text" required />
-          <label>Channel name</label>
-        </div>
+        <h2 className="heading">{name}</h2>
       </div>
       <h3>Submit Video</h3>
       <form onSubmit={(evt) => submitVideo(evt)}>

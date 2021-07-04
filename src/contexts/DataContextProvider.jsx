@@ -39,6 +39,7 @@ export default function DataContextProvider({ children }) {
       const { data } = await axios.get(
         "https://live-farm.herokuapp.com/playlists"
       );
+      console.log(data);
       if (data.success) {
         dispatch({
           type: "INITIALIZE_PLAYLIST",
@@ -51,10 +52,30 @@ export default function DataContextProvider({ children }) {
       dispatch({ type: "LOADING" });
     }
   }
-  
+
+  async function toggleVideoInPlaylist(status, playlistId, videoId) {
+    try {
+      dispatch({ type: "LOADING" });
+      const { data } = await axios[status ? "patch" : "delete"](
+        `https://live-farm.herokuapp.com/playlists/${playlistId}/${videoId}`
+      );
+      if (data.success) {
+        dispatch({
+          type: "TOGGLE_VIDEO_IN_PLAYLIST",
+          payload: { status, playlistId, videoId },
+        });
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: "LOADING" });
+    }
+  }
+
   useEffect(() => {
     token && getPlaylists();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     getVideoData();
@@ -67,6 +88,7 @@ export default function DataContextProvider({ children }) {
         videoData: state.videoData,
         playlistData: state.playlistData,
         dispatch,
+        toggleVideoInPlaylist,
       }}
     >
       {children}

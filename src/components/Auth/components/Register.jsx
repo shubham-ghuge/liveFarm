@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Alert } from "../../Alert";
+import { useAuthContext } from "../../../contexts/AuthContextProvider";
 
 function Register() {
   const [inputDetails, setInputDetails] = useState({
@@ -14,6 +15,13 @@ function Register() {
     showPass: true,
     showConfirmPass: true,
   });
+  let navigate = useNavigate();
+  const { userDetails } = useAuthContext();
+  const { isUserLoggedIn } = userDetails || {};
+  useEffect(() => {
+    isUserLoggedIn && navigate("/", { replace: true });
+  }, []);
+  
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   async function userRegistration(e) {
@@ -34,6 +42,9 @@ function Register() {
         );
       }
       setMessage(data.message);
+      return setTimeout(() => {
+        navigate("/auth");
+      }, 3000);
     } catch (error) {
       console.log(error);
     } finally {
