@@ -1,8 +1,9 @@
 import { VideoCard } from "../VideoCard";
 import { useDataContext } from "../../contexts/DataContextProvider";
+import { Loader } from "../Loader";
 
 export function Home() {
-  const { videoData } = useDataContext();
+  const { videoData, loading } = useDataContext();
   return (
     <>
       <section className="hero">
@@ -17,15 +18,20 @@ export function Home() {
           <p>
             Curated list of videos for Farmers, <br />
             presented in curated categories. <br />
-            From Farmer to Farmer.
           </p>
         </div>
       </section>
       <section className="video-listing">
         <h3 className="heading">Videos</h3>
-        {videoData.map((video, idx) => (
-          <VideoCard videoDetails={video} key={idx} />
-        ))}
+        {loading ? (
+          <div className="d-flex jc-center ai-center h-30">
+            <Loader />
+          </div>
+        ) : (
+          videoData.map((video, idx) => (
+            <VideoCard videoDetails={video} key={idx} />
+          ))
+        )}
       </section>
     </>
   );

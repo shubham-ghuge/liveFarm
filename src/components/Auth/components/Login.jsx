@@ -38,7 +38,7 @@ function Login() {
         </div>
         <div className="input-livefarm mb-7">
           <input
-            type={userInput.showPass ? "password" : "text"}
+            type={userInput.showPass ? "text" : "password"}
             value={userInput.password}
             onChange={(e) =>
               setUserInput((curr) => ({ ...curr, password: e.target.value }))
@@ -52,7 +52,7 @@ function Login() {
               setUserInput((curr) => ({ ...curr, showPass: !curr.showPass }));
             }}
           >
-            {userInput.showPass ? <AiFillEyeInvisible /> : <AiFillEye />}
+            {userInput.showPass ? <AiFillEye /> : <AiFillEyeInvisible />}
           </button>
           <label data-error="This field is required">Enter Password</label>
         </div>
@@ -63,6 +63,18 @@ function Login() {
       <p className="mt-4">
         New Here? <Link to="/auth/register">Register Now</Link>
       </p>
+      <button
+        className="btn-reset c-primary mt-4 text-capitalize fw-500"
+        onClick={() =>
+          setUserInput((curr) => ({
+            ...curr,
+            email: "shubhamghuge@gmail.com",
+            password: "aaaaa",
+          }))
+        }
+      >
+        demo login credentials
+      </button>
     </>
   );
 }

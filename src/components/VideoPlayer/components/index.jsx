@@ -21,22 +21,22 @@ export const Dropdown = ({ customStyle, videoData }) => {
       <ul>
         {playlistData &&
           playlistData.map((playlist) => (
-            <li className="list" key={playlist.id}>
-              <label htmlFor={playlist.id}>
+            <li className="list" key={playlist._id}>
+              <label htmlFor={playlist._id}>
                 <input
                   type="checkbox"
                   checked={
-                    isInPlaylist(playlistData, playlist.id, videoData)
+                    isInPlaylist(playlistData, playlist._id, videoData)
                       ? true
                       : false
                   }
-                  id={playlist.id}
+                  id={playlist._id}
                   onChange={(e) =>
                     dispatch({
                       type: "TOGGLE_VIDEO_IN_PLAYLIST",
                       payload: {
                         videoId: videoData,
-                        playlistId: playlist.id,
+                        playlistId: playlist._id,
                         status: e.currentTarget.checked,
                       },
                     })

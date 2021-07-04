@@ -10,8 +10,8 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    showPass: false,
-    showConfirmPass: false,
+    showPass: true,
+    showConfirmPass: true,
   });
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);

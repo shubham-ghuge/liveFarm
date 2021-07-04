@@ -13,16 +13,16 @@ export function VideoPlayer() {
   const [toggle, setToggle] = useState(false);
   const { videoId } = useParams();
   const { videoData, playlistData, dispatch } = useDataContext();
-  const video = videoData.filter((vid) => vid.id === videoId);
+  const video = videoData.filter((vid) => vid._id === videoId);
 
   return (
     <>
-      {video.map(({ id, url, name }) => (
-        <section key={id} className="video-player nav-adjust">
+      {video.map(({ _id, url, name }) => (
+        <section key={_id} className="video-player nav-adjust">
           <iframe
             src={`https://www.youtube.com/embed/${url}`}
             title="YouTube video player"
-            key={id}
+            key={_id}
             allowFullScreen
           ></iframe>
           <div className="video-player-description">
@@ -33,15 +33,15 @@ export function VideoPlayer() {
                   dispatch({
                     type: "TOGGLE_VIDEO_IN_PLAYLIST",
                     payload: {
-                      videoId: id,
+                      videoId: _id,
                       playlistId: "p1",
-                      status: !isInPlaylist(playlistData, "p1", id),
+                      status: !isInPlaylist(playlistData, "p1", _id),
                     },
                   })
                 }
               >
                 <span>
-                  {isInPlaylist(playlistData, "p1", id) ? (
+                  {isInPlaylist(playlistData, "p1", _id) ? (
                     <IoMdHeart className="icon" />
                   ) : (
                     <IoMdHeartEmpty className="icon" />
@@ -55,15 +55,15 @@ export function VideoPlayer() {
                   dispatch({
                     type: "TOGGLE_VIDEO_IN_PLAYLIST",
                     payload: {
-                      videoId: id,
+                      videoId: _id,
                       playlistId: "p3",
-                      status: !isInPlaylist(playlistData, "p3", id),
+                      status: !isInPlaylist(playlistData, "p3", _id),
                     },
                   })
                 }
               >
                 <span>
-                  {isInPlaylist(playlistData, "p3", id) ? (
+                  {isInPlaylist(playlistData, "p3", _id) ? (
                     <AiFillClockCircle className="icon" />
                   ) : (
                     <AiOutlineClockCircle className="icon" />
@@ -77,15 +77,15 @@ export function VideoPlayer() {
                   dispatch({
                     type: "TOGGLE_VIDEO_IN_PLAYLIST",
                     payload: {
-                      videoId: id,
+                      videoId: _id,
                       playlistId: "p2",
-                      status: !isInPlaylist(playlistData, "p2", id),
+                      status: !isInPlaylist(playlistData, "p2", _id),
                     },
                   })
                 }
               >
                 <span>
-                  {isInPlaylist(playlistData, "p2", id) ? (
+                  {isInPlaylist(playlistData, "p2", _id) ? (
                     <BsBookmarkFill className="icon" />
                   ) : (
                     <BsBookmark className="icon" />
@@ -107,7 +107,7 @@ export function VideoPlayer() {
               </button>
               {
                 <Dropdown
-                  videoData={id}
+                  videoData={_id}
                   customStyle={
                     toggle ? { display: "block" } : { display: "none" }
                   }

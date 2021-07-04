@@ -10,7 +10,7 @@ export function Playlist(){
     ({ id }) => id === playlistId
   );
   const videosInPlaylist = videoData.filter((item) =>
-    playlistVideos.includes(item.id)
+    playlistVideos.includes(item._id)
   );
   const [playlistName] = playlistData.filter((i) => i.id === playlistId);
 

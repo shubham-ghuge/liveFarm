@@ -3,12 +3,12 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [userDetails, setUserDetails] = useState(
     JSON.parse(localStorage.getItem("userDetails"))
   );
   if (token) {
-    setDefaultHeaderToken(token);
+    axios.defaults.headers.common["Authorization"] = token;
   }
   const [loading, setLoading] = useState(false);
   async function loginWithCredentials(email, password) {
@@ -21,7 +21,7 @@ export default function AuthContextProvider({ children }) {
       if (data.success) {
         setToken(data.token);
         setUserDetails({ isUserLoggedIn: true, name: data.userName });
-        localStorage.setItem("token", JSON.stringify({ token: data.token }));
+        localStorage.setItem("token", data.token);
         localStorage.setItem(
           "userDetails",
           JSON.stringify({
@@ -29,7 +29,7 @@ export default function AuthContextProvider({ children }) {
             name: data.userName,
           })
         );
-        setDefaultHeaderToken(data.token);
+        axios.defaults.headers.common["Authorization"] = data.token;
       }
       return data.message;
     } catch (error) {
@@ -38,16 +38,11 @@ export default function AuthContextProvider({ children }) {
       setLoading(false);
     }
   }
-  function setDefaultHeaderToken(token) {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = token;
-    }
-    axios.defaults.headers.common["Authorization"] = null;
-  }
+
   function logout() {
-    setDefaultHeaderToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
+    axios.defaults.headers.common["Authorization"] = null;
     setToken(null);
     setUserDetails(null);
   }

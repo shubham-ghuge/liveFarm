@@ -6,10 +6,10 @@ export function VideoCard({ videoDetails, showDelete, playlistId }){
   let navigation = useNavigate();
   const { dispatch } = useDataContext();
   function navigateToVideo() {
-    return navigation(`/video/${videoDetails.id}`);
+    return navigation(`/video/${videoDetails._id}`);
   }
   return (
-    <figure className="video-card" key={videoDetails.id}>
+    <figure className="video-card" key={videoDetails._id}>
       <img
         src={`https://img-assets.netlify.app/video-thumbnails/${videoDetails.thumbnail}`}
         alt="thumbnail"
@@ -24,7 +24,7 @@ export function VideoCard({ videoDetails, showDelete, playlistId }){
             dispatch({
               type: "TOGGLE_VIDEO_IN_PLAYLIST",
               payload: {
-                videoId: videoDetails.id,
+                videoId: videoDetails._id,
                 playlistId: playlistId,
                 status: false,
               },
