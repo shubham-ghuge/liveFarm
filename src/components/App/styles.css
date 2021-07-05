@@ -34,6 +34,9 @@ body {
 .text-sm {
   font-size: 0.8rem;
 }
+.h-5{
+  height: 40px;
+}
 .close-icon {
   position: absolute;
   top: 2%;

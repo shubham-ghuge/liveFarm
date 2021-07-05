@@ -2,6 +2,7 @@ import React from "react";
 import { VideoCard } from "../VideoCard";
 import { useDataContext } from "../../contexts/DataContextProvider";
 import { Loader } from "../Loader";
+import { Footer } from "../Footer";
 
 export function Home() {
   const { videoData, loading } = useDataContext();
@@ -34,6 +35,7 @@ export function Home() {
           ))
         )}
       </section>
+      <Footer />
     </>
   );
 }
