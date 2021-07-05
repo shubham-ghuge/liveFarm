@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import channelIcon from "../../assets/photo1.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "../../contexts/AuthContextProvider";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 export function Account() {
-  const { userDetails } = useAuthContext();
+  const { userDetails, logout } = useAuthContext();
   const { name } = userDetails || {};
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({ name: "", email: "" });
+  async function getUserData() {
+    try {
+      const { data } = await axios.get(
+        "https://live-farm.herokuapp.com/users/"
+      );
+      if (data.success) {
+        setUserData(data.response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    console.log('here');
+    name && getUserData();
+  }, []);
   return (
     <section className="user-account nav-adjust">
       <h3>Profile</h3>
@@ -15,34 +33,26 @@ export function Account() {
         <img src={channelIcon} className="channel-icon" alt="User" />
         <h2 className="heading">{name}</h2>
       </div>
-      <h3>Submit Video</h3>
-      <form onSubmit={(evt) => submitVideo(evt)}>
-        <div className="input-livefarm">
-          <input type="URL" required />
-          <label>Enter YT Video URL</label>
+      <div>
+        <div className="input-livefarm mb-7">
+          <input type="URL" value={userData.name} required  readOnly />
         </div>
-        <div className="input-livefarm">
-          <input type="text" required />
-          <label data-error="This field is required">
-            Enter Video Thumbnail
-          </label>
-        </div>
-        <div className="input-livefarm">
-          <input type="text" required />
-          <label data-error="This field is required">Enter Video Title</label>
+        <div className="input-livefarm mb-7">
+          <input type="text" value={userData.email} required readOnly />
         </div>
         <button
-          type="submit"
-          className="icon-btn-base btn-addon"
-          onClick={() => toast("Working on These!")}
+          className="icon-btn-base p-7 d-flex ai-center"
+          onClick={() => {
+            logout();
+            return navigate("/");
+          }}
         >
           <span>
-            <AiOutlineCloudUpload className="icon" />
+            <AiOutlineCloudUpload className="icon mr-3" />
           </span>
-          Submit
+          Logout
         </button>
-      </form>
-      <ToastContainer />
+      </div>
     </section>
   );
 }

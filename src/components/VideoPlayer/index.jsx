@@ -1,5 +1,5 @@
 import channelLogo from "../../assets/photo1.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -15,27 +15,37 @@ import { Loader } from "../Loader";
 export function VideoPlayer() {
   const { videoId } = useParams();
   const { userDetails } = useAuthContext();
-  const { videoData, playlistData, toggleVideoInPlaylist, loading } =
-    useDataContext();
+  const [video, setVideo] = useState(null);
+  const [smallLoader, setSmallLoader] = useState(false);
+  const {
+    videoData,
+    playlistData,
+    getPlaylistId,
+    toggleVideoInPlaylist,
+    loading,
+  } = useDataContext();
   const [toggle, setToggle] = useState(false);
   const [message, setMessage] = useState(null);
   let navigate = useNavigate();
   const { isUserLoggedIn } = userDetails || {};
-  const video = videoData.filter((vid) => vid._id === videoId);
-
-  function getPlaylistId(name) {
-    const [{ _id }] = playlistData.filter((i) => i.name === name);
-    return _id;
-  }
+  useEffect(() => {
+    if (!loading) {
+      const video = videoData.filter((vid) => vid._id === videoId);
+      setVideo(video);
+    }
+  }, [loading]);
 
   async function videoInplaylistHandler(status, playlistId, videoId) {
     try {
+      setSmallLoader(true);
       const data = await toggleVideoInPlaylist(status, playlistId, videoId);
       if (data.success) {
         setMessage(data.message);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setSmallLoader(false);
     }
   }
 
@@ -57,108 +67,115 @@ export function VideoPlayer() {
               allowFullScreen
             ></iframe>
             <div className="video-player-description">
-              <div className="video-player-actions">
-                <button
-                  className="icon-btn-base btn-addon"
-                  onClick={() =>
-                    isUserLoggedIn
-                      ? videoInplaylistHandler(
-                          !isInPlaylist(
-                            playlistData,
+              {smallLoader ? (
+                <Loader size="sm" />
+              ) : (
+                <div className="video-player-actions">
+                  <button
+                    className="icon-btn-base btn-addon"
+                    onClick={() =>
+                      isUserLoggedIn
+                        ? videoInplaylistHandler(
+                            !isInPlaylist(
+                              playlistData,
+                              getPlaylistId("liked videos"),
+                              _id
+                            ),
                             getPlaylistId("liked videos"),
                             _id
-                          ),
-                          getPlaylistId("liked videos"),
-                          _id
-                        )
-                      : navigate("/auth")
-                  }
-                >
-                  <span>
-                    {isInPlaylist(
-                      playlistData,
-                      getPlaylistId("liked videos"),
-                      _id
-                    ) ? (
-                      <IoMdHeart className="icon" />
-                    ) : (
-                      <IoMdHeartEmpty className="icon" />
-                    )}
-                  </span>
-                  <span className="text">Like</span>
-                </button>
-                <button
-                  className="icon-btn-base btn-addon"
-                  onClick={() =>
-                    isUserLoggedIn
-                      ? videoInplaylistHandler(
-                          !isInPlaylist(
-                            playlistData,
+                          )
+                        : navigate("/auth")
+                    }
+                  >
+                    <span>
+                      {isUserLoggedIn &&
+                      isInPlaylist(
+                        playlistData,
+                        getPlaylistId("liked videos"),
+                        _id
+                      ) ? (
+                        <IoMdHeart className="icon" />
+                      ) : (
+                        <IoMdHeartEmpty className="icon" />
+                      )}
+                    </span>
+                    <span className="text">like</span>
+                  </button>
+                  <button
+                    className="icon-btn-base btn-addon"
+                    onClick={() =>
+                      isUserLoggedIn
+                        ? videoInplaylistHandler(
+                            !isInPlaylist(
+                              playlistData,
+                              getPlaylistId("watch later"),
+                              _id
+                            ),
                             getPlaylistId("watch later"),
                             _id
-                          ),
-                          getPlaylistId("watch later"),
-                          _id
-                        )
-                      : navigate("/auth")
-                  }
-                >
-                  <span>
-                    {isInPlaylist(
-                      playlistData,
-                      getPlaylistId("watch later"),
-                      _id
-                    ) ? (
-                      <AiFillClockCircle className="icon" />
-                    ) : (
-                      <AiOutlineClockCircle className="icon" />
-                    )}
-                  </span>
-                  <span className="text">later</span>
-                </button>
-                <button
-                  className="icon-btn-base btn-addon"
-                  onClick={() =>
-                    isUserLoggedIn
-                      ? videoInplaylistHandler(
-                          !isInPlaylist(
-                            playlistData,
+                          )
+                        : navigate("/auth")
+                    }
+                  >
+                    <span>
+                      {isUserLoggedIn &&
+                      isInPlaylist(
+                        playlistData,
+                        getPlaylistId("watch later"),
+                        _id
+                      ) ? (
+                        <AiFillClockCircle className="icon" />
+                      ) : (
+                        <AiOutlineClockCircle className="icon" />
+                      )}
+                    </span>
+                    <span className="text">later</span>
+                  </button>
+                  <button
+                    className="icon-btn-base btn-addon"
+                    onClick={() =>
+                      isUserLoggedIn
+                        ? videoInplaylistHandler(
+                            !isInPlaylist(
+                              playlistData,
+                              getPlaylistId("saved videos"),
+                              _id
+                            ),
                             getPlaylistId("saved videos"),
                             _id
-                          ),
-                          getPlaylistId("saved videos"),
-                          _id
-                        )
-                      : navigate("/auth")
-                  }
-                >
-                  <span>
-                    {isInPlaylist(
-                      playlistData,
-                      getPlaylistId("saved videos"),
-                      _id
-                    ) ? (
-                      <BsBookmarkFill className="icon" />
-                    ) : (
-                      <BsBookmark className="icon" />
-                    )}
-                  </span>
-                  <span className="text">save</span>
-                </button>
-                <button
-                  className="icon-btn-base btn-addon"
-                  onClick={() => setToggle((curr) => (curr = !curr))}
-                >
-                  <span>
-                    <FiPlusCircle
-                      className="icon"
-                      style={toggle && { transform: "rotate(45deg)" }}
-                    />
-                  </span>
-                  <span className="text">{toggle ? "close" : "add"}</span>
-                </button>
-                {toggle && <Dropdown videoData={_id} />}
-              </div>
+                          )
+                        : navigate("/auth")
+                    }
+                  >
+                    <span>
+                      {isUserLoggedIn &&
+                      isInPlaylist(
+                        playlistData,
+                        getPlaylistId("saved videos"),
+                        _id
+                      ) ? (
+                        <BsBookmarkFill className="icon" />
+                      ) : (
+                        <BsBookmark className="icon" />
+                      )}
+                    </span>
+                    <span className="text">save</span>
+                  </button>
+                  <button
+                    className="icon-btn-base btn-addon"
+                    onClick={() => setToggle((curr) => (curr = !curr))}
+                  >
+                    <span>
+                      <FiPlusCircle
+                        className="icon"
+                        style={toggle && { transform: "rotate(45deg)" }}
+                      />
+                    </span>
+                    <span className="text">{toggle ? "close" : "add"}</span>
+                  </button>
+                  {toggle && <Dropdown videoData={_id} />}
+                </div>
+              )}
               <div className="video-player-user">
                 <div className="u-info">
                   <img src={channelLogo} alt="channel logo" />

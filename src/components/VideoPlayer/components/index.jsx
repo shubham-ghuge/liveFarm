@@ -17,7 +17,6 @@ export const Dropdown = ({ videoData }) => {
         "https://live-farm.herokuapp.com/playlists",
         { videoId: videoData, name: newPlaylist }
       );
-      console.log(data);
       if (data.success) {
         dispatch({
           type: "ADD_NEW_PLAYLIST",

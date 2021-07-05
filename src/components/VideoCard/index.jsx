@@ -19,7 +19,7 @@ export function VideoCard({ videoDetails, showDelete, playlistId }) {
       ) : (
         <figure className="video-card" key={videoDetails._id}>
           <img
-            src={`https://img-assets.netlify.app/video-thumbnails/${videoDetails.thumbnail}`}
+            src={videoDetails.thumbnail}
             alt="thumbnail"
             className="video-card-thumbnail"
             loading="lazy"
@@ -36,23 +36,8 @@ export function VideoCard({ videoDetails, showDelete, playlistId }) {
             </button>
           )}
           <figcaption className="video-card-details" onClick={navigateToVideo}>
-            <p className="channel-name">
-              User Name <span className="date">jan 12, 2021</span>
-            </p>
-            <h4 className="video-card-title">{videoDetails.name}</h4>
-            <p className="video-card-description">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio
-              magnam fuga voluptatum sunt at. Perferendis unde perspiciatis
-              aliquam cupiditate id.
-            </p>
-            <div className="video-card-stats">
-              <span className="count">
-                <i className="icon bx bx-show-alt"></i>23 views
-              </span>
-              <span className="likes">
-                <i className="icon bx bxs-heart"></i>23 likes
-              </span>
-            </div>
+            <h2 className="video-card-title">{videoDetails.name}</h2>
+            <p className="video-card-description">{videoDetails.description}</p>
           </figcaption>
         </figure>
       )}

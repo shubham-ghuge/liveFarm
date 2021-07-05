@@ -6,7 +6,6 @@ import { VideoCard } from "../VideoCard";
 export function Playlist() {
   const { playlistId } = useParams();
   const { videoData, playlistData } = useDataContext();
-  console.log(playlistData);
   const [{ videos: playlistVideos }] = playlistData.filter(
     ({ _id }) => _id === playlistId
   );
