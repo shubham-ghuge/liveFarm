@@ -1,0 +1,37 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 60px auto;
+  height: 80vh;
+  color: #f7fafc;
+  flex-direction: column;
+}
+.alert-danger{
+  width: 90vw;
+}
+.auth-container .btn-primary {
+  color: #000;
+  font-size: 1.2rem;
+  width: 315px;
+}
+.auth-container .heading {
+  margin-bottom: 2rem;
+}
+.input-livefarm {
+  width: 315px;
+}
+.input-livefarm label {
+  width: 100%;
+}
+.input-livefarm .icon {
+  position: absolute;
+  right: 0%;
+  top: 20%;
+  z-index: var(--z-2);
+}
+.input-livefarm svg {
+  height: 20px;
+  width: 20px;
+}
